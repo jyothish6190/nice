@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="flash_logo_size">250dp</dimen>
+    <dimen name="flash_app_name_size">50sp</dimen>
+    <dimen name="flash_login_btn_text_size">16sp</dimen>
+</resources>
