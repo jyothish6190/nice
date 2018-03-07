@@ -3,16 +3,21 @@ package com.nice.nice.splash
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.nice.nice.R
 import com.nice.nice.login.LoginActivity
 import com.nice.nice.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_splash.*
+import com.nice.nice.HomeActivity
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class SplashActivity : AppCompatActivity(), View.OnClickListener {
+    private var auth: FirebaseAuth? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +27,10 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_splash)
 
-        registerBtn.setOnClickListener(this);
-        loginBtn.setOnClickListener(this);
+        isloggedIn()
+
+        registerBtn.setOnClickListener(this)
+        loginBtn.setOnClickListener(this)
 
 
     }
@@ -37,12 +44,22 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun register() {
+
+    private fun isloggedIn(){
+        auth = FirebaseAuth.getInstance()
+        if (auth?.currentUser != null) {
+            startActivity(HomeActivity.newIntent(this, auth?.currentUser))
+            finish()
+        }
+
+    }
+
+    private fun register() {
         startActivity(RegisterActivity.newIntent(this))
 
     }
 
-    fun login() {
+    private fun login() {
         startActivity(LoginActivity.newIntent(this))
     }
 
