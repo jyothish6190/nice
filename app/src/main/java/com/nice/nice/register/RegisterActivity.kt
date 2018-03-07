@@ -43,8 +43,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, RegisterActivity::class.java)
-            return intent
+            return Intent(context, RegisterActivity::class.java)
         }
     }
 }

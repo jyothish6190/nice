@@ -37,8 +37,7 @@ class ForgotActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, ForgotActivity::class.java)
-            return intent
+            return Intent(context, ForgotActivity::class.java)
         }
     }
 

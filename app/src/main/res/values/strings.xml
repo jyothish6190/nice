@@ -18,6 +18,9 @@
     <string name="back"><![CDATA[<<Back]]></string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password_msg">We just need your registerd Email Id to sent the password reset instructions</string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+
 
 
     <!--register-->
