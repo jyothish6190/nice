@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorIcons"
     tools:context="com.nice.nice.splash.SplashActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -13,24 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="50dp">
-        <TextView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:keepScreenOn="true"
-            android:text="@string/dummy_content"
-            android:textColor="@color/icons"
-            android:textSize="@dimen/flash_app_name_size"
-            android:textStyle="bold" />
-
+        android:layout_marginTop="40dp">
         <ImageView
             android:layout_width="@dimen/flash_logo_size"
             android:layout_height="@dimen/flash_logo_size"
             android:src="@mipmap/app_icon"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"/>
+            android:layout_gravity="center"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="@string/flash_app_title"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="23sp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="@string/flash_app_content"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"/>
+
+
 
     </android.support.v7.widget.LinearLayoutCompat>
 
@@ -55,12 +67,34 @@
             tools:ignore="UselessParent">
 
             <Button
-                android:id="@+id/dummy_button"
+                android:id="@+id/registerBtn"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/icons"
+                android:layout_weight=".4"
+                android:textColor="@color/colorIcons"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="@dimen/flash_login_btn_text_size"
+                android:text="@string/register_button_text" />
+
+            <Button
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:textColor="@color/colorIcons"
+                android:textAllCaps="true"
+                android:textSize="22sp"
+                android:text="|" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:textColor="@color/colorIcons"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textSize="@dimen/flash_login_btn_text_size"
