@@ -12,11 +12,11 @@ import com.nice.nice.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import android.widget.Toast
 import android.text.TextUtils
-import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.nice.nice.HomeActivity
+import com.nice.nice.utils.StringUtils
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -54,9 +54,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val email = email.text.toString()
         val password = password.text.toString()
 
-        Log.d(email, password)
-
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email) && StringUtils.isEmailValid(email)) {
             Toast.makeText(applicationContext, "Enter email address!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -67,28 +65,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         progressBar.visibility = View.VISIBLE
-
-//        //authenticate user
-//        auth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener(this@LoginActivity, OnCompleteListener<AuthResult> { task ->
-//            // If sign in fails, display a message to the user. If sign in succeeds
-//            // the auth state listener will be notified and logic to handle the
-//            // signed in user can be handled in the listener.
-//            progressBar.visibility = View.GONE
-//            if (!task.isSuccessful) {
-//                // there was an error
-//                if (password.length < 6) {
-////                    password.(getString(R.string.minimum_password))
-//                    Toast.makeText(this@LoginActivity, getString(R.string.minimum_password), Toast.LENGTH_LONG).show()
-//
-//                } else {
-//                    Toast.makeText(this@LoginActivity, getString(R.string.auth_failed), Toast.LENGTH_LONG).show()
-//                }
-//            } else {
-//
-//                startActivity(HomeActivity.newIntent(this, auth?.currentUser))
-//                finish()
-//            }
-//        })
 
         auth?.signInWithEmailAndPassword(email, password)?.addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
             if(task.isSuccessful){
