@@ -28,6 +28,11 @@
 
     <string name="action_settings">Settings</string>
     <string name="task_name">Enter Task Name</string>
+    <string name="task_description">Task Description</string>
+    <string name="assign_to">Assign To</string>
+    <string name="tags">Tags</string>
+    <string name="save">Save</string>
+    <string name="enter_task_deadline">Enter task deadline</string>
 
 
     <!--register-->
