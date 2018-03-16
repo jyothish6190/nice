@@ -55,12 +55,16 @@
             android:name=".manager.AdminActivity"
             android:label="@string/title_activity_admin"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".todo.create_todo.CreateTodoActivity"
-            android:parentActivityName=".manager.AdminActivity" >
+        <activity
+            android:name=".todo.create_todo.CreateTodoActivity"
+            android:parentActivityName=".manager.AdminActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".manager.AdminActivity" />
         </activity>
+        <activity android:name=".chat.ChatListActivity" />
+        <activity android:name=".chat.message.MessageActivity" />
+        <activity android:name=".chat.message.BaseMessageActivity"></activity>
     </application>
 
 </manifest>
