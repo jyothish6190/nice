@@ -3,6 +3,11 @@
     package="com.nice.nice">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -28,8 +33,34 @@
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/loginLabel" />
-        <activity android:name=".forgot.ForgotActivity"
-            android:label="@string/forgot_password"></activity>
+        <activity
+            android:name=".forgot.ForgotActivity"
+            android:label="@string/forgot_password" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.nice.nice.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".user.UserHomeActivity"
+            android:label="@string/title_activity_user_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manager.AdminActivity"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".todo.create_todo.CreateTodoActivity"
+            android:parentActivityName=".manager.AdminActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".manager.AdminActivity" />
+        </activity>
     </application>
 
 </manifest>

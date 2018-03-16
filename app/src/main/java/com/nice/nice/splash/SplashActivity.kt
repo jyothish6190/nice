@@ -1,15 +1,15 @@
 package com.nice.nice.splash
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.nice.nice.HomeActivity
 import com.nice.nice.R
 import com.nice.nice.login.LoginActivity
 import com.nice.nice.register.RegisterActivity
+import com.nice.nice.todo.create_todo.CreateTodoActivity
 import kotlinx.android.synthetic.main.activity_splash.*
-import com.nice.nice.HomeActivity
 
 
 /**
@@ -26,6 +26,8 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.hide()
 
         setContentView(R.layout.activity_splash)
+
+        startActivity(CreateTodoActivity.newIntent(this))
 
         isloggedIn()
 

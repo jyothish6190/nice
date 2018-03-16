@@ -54,8 +54,8 @@
                 android:layout_marginTop="20dp"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white" />
+                android:textColor="@color/colorSecondaryText"
+                android:textColorHint="@color/colorSecondaryText" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->
