@@ -8,16 +8,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.annotation.NonNull
 import android.support.design.widget.Snackbar
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.nice.nice.HomeActivity
 import com.nice.nice.R
 import com.nice.nice.login.LoginActivity
@@ -27,8 +27,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
@@ -37,9 +35,12 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentPhotoPath: String? = null
     private var photoFile: File? = null
     private var photoURI: Uri? = null
-    private var Storage_Path = "profile_pic/"
+    private var storagePath = "profile_pic/"
     private var storageReference: StorageReference? = null
+    private var profileReference: StorageReference? = null
     private var FilePathUri: Uri? = null
+
+    private var fileDownloadUrl: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+        profileReference = storageReference!!.child(storagePath)
 
+
+        schoolName.imeOptions
 
 
         registerBtn.setOnClickListener(this)
@@ -64,18 +68,24 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun register(view: View) {
-        if (uploadImage()) {
+    private fun register(view: View) {
+        if (uploadImage(view)) {
             val email = email.text.toString()
             val password = password.text.toString()
+            val schoolName = schoolName.text.toString()
 
-            if (TextUtils.isEmpty(email) && StringUtils.isEmailValid(email)) {
+            if (TextUtils.isEmpty(email) || !StringUtils.isEmailValid(email)) {
                 showMessage(view, "Enter email address!")
                 return
             }
 
             if (TextUtils.isEmpty(password) || password.length < 6) {
                 showMessage(view, "Enter password!")
+                return
+            }
+
+            if (TextUtils.isEmpty(schoolName) || schoolName.length < 6) {
+                showMessage(view, "Enter school name!")
                 return
             }
 
@@ -95,75 +105,34 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun login() {
+    private fun login() {
         startActivity(LoginActivity.newIntent(this))
     }
 
-    fun takePicture() {
+    private fun takePicture() {
         dispatchTakePictureIntent()
     }
 
 
-    private var storageReference2nd: StorageReference = nu
-
-    fun uploadImage(): Boolean {
+    private fun uploadImage(view: View): Boolean {
         if (FilePathUri != null) {
-            storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
-
-            // Adding addOnSuccessListener to second StorageReference.
-            storageReference2nd.putFile(FilePathUri)
-                    .addOnSuccessListener(new OnSuccessListener < UploadTask . TaskSnapshot >() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            // Getting image name from EditText and store into string variable.
-                            String TempImageName = ImageName . getText ().toString().trim();
-
-                            // Hiding the progressDialog after done uploading.
-                            progressDialog.dismiss();
-
-                            // Showing toast message after done uploading.
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
-                            @SuppressWarnings("VisibleForTests")
-                            ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, taskSnapshot.getDownloadUrl().toString());
-
-                            // Getting image upload ID.
-                            String ImageUploadId = databaseReference . push ().getKey();
-
-                            // Adding image upload id s child element into databaseReference.
-                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
-                        }
-                    })
-                    // If something goes wrong .
-                    .addOnFailureListener(new OnFailureListener () {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-
-                            // Hiding the progressDialog.
-                            progressDialog.dismiss();
-
-                            // Showing exception erro message.
-                            Toast.makeText(MainActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
-
-                    // On progress change upload time.
-                    .addOnProgressListener(new OnProgressListener < UploadTask . TaskSnapshot >() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            // Setting progressDialog Title.
-                            progressDialog.setTitle("Image is Uploading...");
-
-                        }
-                    });
+            var mReference = profileReference?.child(FilePathUri!!.lastPathSegment)
+            try {
+                mReference?.putFile(FilePathUri!!)?.addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot? ->
+                    var url = taskSnapshot!!.downloadUrl
+                    fileDownloadUrl = taskSnapshot!!.downloadUrl.toString()
+                }
+            } catch (e: Exception) {
+                showMessage(view, "Upload Failed")
+            }
+        } else {
+            showMessage(view, "Please upload an image")
         }
 
-
+        return fileDownloadUrl != null
     }
 
-    fun showMessage(view: View, message: String) {
+    private fun showMessage(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
 
@@ -177,7 +146,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
-            photoFile = null;
+            photoFile = null
             try {
                 photoFile = createImageFile()
             } catch (ex: IOException) {
@@ -241,11 +210,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            FilePathUri = data.getData();
-            setPic()
-
+            FilePathUri = data?.data
+            if (data?.data != null)
+                setPic()
         }
     }
 }

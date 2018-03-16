@@ -2,21 +2,21 @@ package com.nice.nice.login
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.nice.nice.HomeActivity
 import com.nice.nice.R
 import com.nice.nice.forgot.ForgotActivity
 import com.nice.nice.register.RegisterActivity
-import kotlinx.android.synthetic.main.activity_login.*
-import android.widget.Toast
-import android.text.TextUtils
-import com.google.firebase.auth.AuthResult
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
-import com.nice.nice.HomeActivity
 import com.nice.nice.utils.StringUtils
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val email = email.text.toString()
         val password = password.text.toString()
 
-        if (TextUtils.isEmpty(email) && StringUtils.isEmailValid(email)) {
+        if (TextUtils.isEmpty(email) || !StringUtils.isEmailValid(email)) {
             Toast.makeText(applicationContext, "Enter email address!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun showMessage(view:View, message: String){
+    private fun showMessage(view:View, message: String){
         progressBar.visibility = View.INVISIBLE
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
     }
