@@ -6,9 +6,9 @@ import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.nice.nice.HomeActivity
 import com.nice.nice.R
-import com.nice.nice.chat.ChatListActivity
 import com.nice.nice.login.LoginActivity
 import com.nice.nice.register.RegisterActivity
+import com.nice.nice.user.UserHomeActivity
 
 
 /**
@@ -26,8 +26,7 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_splash)
 
-        ChatListActivity.open(this)
-
+        UserHomeActivity.startActivity(this)
 //        isloggedIn()
 //
 //        registerBtn.setOnClickListener(this)

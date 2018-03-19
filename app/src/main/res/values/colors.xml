@@ -2,9 +2,7 @@
 <resources>
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
-    <color name="colorPrimaryLight">#BBDEFB</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
@@ -15,7 +13,6 @@
     <color name="green">#38be55</color>
     <color name="green_dark">#2da346</color>
     <color name="gray_light">#e8e8e8</color>
-    <color name="gray_dark">#858585</color>
     <color name="gray_dark_transparent">#ae858585</color>
 
 

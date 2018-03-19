@@ -5,7 +5,6 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
 import com.nice.nice.R
 import com.nice.nice.chat.data.MessagesFixtures
 import com.nice.nice.chat.models.Message
@@ -28,25 +27,21 @@ abstract class BaseMessageActivity : AppCompatActivity(), MessagesListAdapter.Se
     private var lastLoadedDate: Date? = null
 
     private val messageStringFormatter: MessagesListAdapter.Formatter<Message>
-        get() = MessagesListAdapter.Formatter<Message> { message ->
+        get() = MessagesListAdapter.Formatter { message ->
             val createdAt = SimpleDateFormat("MMM d, EEE 'at' h:mm a", Locale.getDefault())
-                    .format(message.getCreatedAt())
+                    .format(message.createdAt)
 
-            var text = message.getText()
+            var text = message.text
             if (text == null) text = "[attachment]"
 
             String.format(Locale.getDefault(), "%s: %s (%s)",
-                    message.getUser().getName(), text, createdAt)
+                    message.user.name, text, createdAt)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        imageLoader = object : ImageLoader {
-            override fun loadImage(imageView: ImageView, url: String) {
-                Picasso.with(this@BaseMessageActivity).load(url).into(imageView)
-            }
-        }
+        imageLoader = ImageLoader { imageView, url -> Picasso.with(this@BaseMessageActivity).load(url).into(imageView) }
     }
 
     override fun onStart() {
@@ -62,7 +57,7 @@ abstract class BaseMessageActivity : AppCompatActivity(), MessagesListAdapter.Se
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             R.id.action_delete -> messagesAdapter!!.deleteSelectedMessages()
             R.id.action_copy -> {
                 messagesAdapter!!.copySelectedMessagesText(this, messageStringFormatter, true)
@@ -88,8 +83,8 @@ abstract class BaseMessageActivity : AppCompatActivity(), MessagesListAdapter.Se
 
     override fun onSelectionChanged(count: Int) {
         this.selectionCount = count
-        menu!!.findItem(R.id.action_delete).setVisible(count > 0)
-        menu!!.findItem(R.id.action_copy).setVisible(count > 0)
+        menu!!.findItem(R.id.action_delete).isVisible = count > 0
+        menu!!.findItem(R.id.action_copy).isVisible = count > 0
     }
 
     protected fun loadMessages() {
@@ -103,6 +98,6 @@ abstract class BaseMessageActivity : AppCompatActivity(), MessagesListAdapter.Se
 
     companion object {
 
-        private val TOTAL_MESSAGES_COUNT = 100
+        private const val TOTAL_MESSAGES_COUNT = 100
     }
 }
