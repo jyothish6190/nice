@@ -12,8 +12,13 @@
         android:title="@string/title_messages" />
 
     <item
+        android:id="@+id/navigation_reports"
+        android:icon="@drawable/ic_equalizer_black_24dp"
+        android:title="@string/title_reports" />
+
+    <item
         android:id="@+id/navigation_tasks"
-        android:icon="@drawable/ic_assignment_black_24dp"
+        android:icon="@drawable/ic_format_list_bulleted_black_24dp"
         android:title="@string/title_tasks" />
 
     <item

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/small_margin"
+    android:weightSum="1">
+
+    <CheckBox
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight=".1"
+        android:checked="false"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_weight=".9"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/dialog_title_text_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/assigned"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:text="Jyothish Jose"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/dialog_message_text_size" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:text="12/10/1987"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/dialog_date_text_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/schoolName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="School Name"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/dialog_date_text_size" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

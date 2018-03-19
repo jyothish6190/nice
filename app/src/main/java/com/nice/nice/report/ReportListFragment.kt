@@ -1,20 +1,18 @@
-package com.nice.nice.todo
+package com.nice.nice.report
 
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.nice.nice.R
-import com.nice.nice.todo.dummy.DummyContent
-import com.nice.nice.todo.dummy.DummyContent.DummyItem
 
+import com.nice.nice.R
+import com.nice.nice.report.dummy.DummyContent
+import com.nice.nice.report.dummy.DummyContent.DummyItem
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +25,7 @@ import com.nice.nice.todo.dummy.DummyContent.DummyItem
  * Mandatory empty constructor for the fragment manager to instantiate the
  * fragment (e.g. upon screen orientation changes).
  */
-class TaskListFragment : Fragment() {
+class ReportListFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -42,25 +40,18 @@ class TaskListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_item_list, container, false)
+        val view = inflater!!.inflate(R.layout.report_list_item, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
             val context = view.getContext()
-
             if (mColumnCount <= 1) {
                 view.layoutManager = LinearLayoutManager(context)
-
             } else {
                 view.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            view.adapter = FragmentListAdapter(DummyContent.ITEMS, mListener)
-
-            val itemDecor = DividerItemDecoration(context, LinearLayout.VERTICAL)
-            view.addItemDecoration(itemDecor)
+            view.adapter = ReportListAdapter(DummyContent.ITEMS, mListener)
         }
-
-
         return view
     }
 
@@ -99,8 +90,8 @@ class TaskListFragment : Fragment() {
         private val ARG_COLUMN_COUNT = "column-count"
 
         // TODO: Customize parameter initialization
-        fun newInstance(columnCount: Int): TaskListFragment {
-            val fragment = TaskListFragment()
+        fun newInstance(columnCount: Int): ReportListFragment {
+            val fragment = ReportListFragment()
             val args = Bundle()
             args.putInt(ARG_COLUMN_COUNT, columnCount)
             fragment.arguments = args

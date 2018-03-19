@@ -9,10 +9,20 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import com.nice.nice.R
 import com.nice.nice.chat.MessagesFragment
+import com.nice.nice.report.ReportListFragment
 import com.nice.nice.todo.TaskListFragment
+import com.nice.nice.todo.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_user_home.*
 
-class UserHomeActivity : AppCompatActivity() {
+class UserHomeActivity : AppCompatActivity(), TaskListFragment.OnListFragmentInteractionListener, ReportListFragment.OnListFragmentInteractionListener {
+    override fun onListFragmentInteraction(item: com.nice.nice.report.dummy.DummyContent.DummyItem) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListFragmentInteraction(item: DummyContent.DummyItem) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var toolbar: ActionBar? = null
 
 
@@ -28,6 +38,12 @@ class UserHomeActivity : AppCompatActivity() {
             R.id.navigation_messages -> {
                 toolbar?.title = getString(R.string.title_messages)
                 fragment = MessagesFragment()
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_reports -> {
+                toolbar?.title = getString(R.string.title_reports)
+                fragment = ReportListFragment()
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
