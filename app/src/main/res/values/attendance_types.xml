@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="attendance_prompt">Choose One</string>
+    <string-array name="attendance_type_arrays">
+        <item>Present</item>
+        <item>Leave</item>
+        <item>Paid Leave</item>
+        <item>Absent</item>
+    </string-array>
+</resources>

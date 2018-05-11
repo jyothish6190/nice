@@ -3,12 +3,10 @@
     <dimen name="flash_logo_size">250dp</dimen>
     <dimen name="flash_login_btn_text_size">16sp</dimen>
     <dimen name="margin">16dp</dimen>
-    <dimen name="logo_size">150dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="small_margin">4dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
 
     <!--report screen-->
     <dimen name="feed_item_margin">10dp</dimen>

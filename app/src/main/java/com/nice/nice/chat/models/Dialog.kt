@@ -41,4 +41,8 @@ class Dialog(private val id: String, private val dialogName: String, private val
     fun setUnreadCount(unreadCount: Int) {
         this.unreadCount = unreadCount
     }
+
+    companion object {
+        const val COLLECTION_KEY = "Groups"
+    }
 }

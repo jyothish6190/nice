@@ -3,58 +3,76 @@ package com.nice.nice.report
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.nice.nice.R
-import com.nice.nice.report.dummy.DummyContent
 import com.nice.nice.report.dummy.DummyContent.DummyItem
+import com.nice.nice.report.models.Report
+import com.nice.nice.user.models.User
+import kotlinx.android.synthetic.main.report_list_item.*
+import java.util.*
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class ReportListFragment : Fragment() {
     // TODO: Customize parameters
-    private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+    private var reportsArray: ArrayList<Report> = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var mAuth: FirebaseAuth? = null
 
-        if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
-        }
+
+    private val firestore by lazy {
+        FirebaseFirestore.getInstance().collection(User.COLLECTION_KEY)
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+        mAuth = FirebaseAuth.getInstance()
+        fetchReports()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.report_list_item, container, false)
+        val list = inflater!!.inflate(R.layout.report_list_item, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
-            } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-            view.adapter = ReportListAdapter(DummyContent.ITEMS, mListener)
+        if (list is RecyclerView) {
+            val context =  list.getContext()
+
+            list.layoutManager = LinearLayoutManager(context)
+            list.adapter = ReportListAdapter(activity, reportsArray, mListener)
         }
-        return view
+        return list
     }
 
+    private fun fetchReports() {
+        reportsArray.clear()
+        var user = mAuth!!.currentUser
+
+        firestore.document(user!!.uid).collection(Report.COLLECTION_KEY).addSnapshotListener { documentSnapshot, e ->
+            when {
+                e != null -> Log.e("ERROR", e.message)
+                documentSnapshot != null  && !documentSnapshot.isEmpty && documentSnapshot.size() > 0 -> {
+                    with(documentSnapshot) {
+                        for (item in documentSnapshot.documents) {
+                            if(item.exists()) {
+                                var report = Report(item.getString(Report.NAME_KEY)!!, item.getString(Report.DESC_KEY)!!, item.getString(Report.FILE_KEY)!!)
+                                reportsArray.add(report)
+                            }
+                        }
+                        list?.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

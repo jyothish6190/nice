@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'io.fabric'
+
+
+
 
 
 android {
@@ -12,10 +16,11 @@ android {
         applicationId "com.nice.nice"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -40,13 +45,17 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:support-vector-drawable:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
+    api 'com.android.support:design:26.1.0'
+
+    api 'com.android.support:multidex:1.0.1'
+
+    api 'com.google.android.gms:play-services-location:15.0.0'
 
 
 
@@ -54,47 +63,32 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.google.firebase:firebase-core:11.8.0'
-    compile 'com.google.firebase:firebase-auth:11.8.0'
-    compile 'com.google.firebase:firebase-storage:11.8.0'
+    api 'com.google.firebase:firebase-core:15.0.0'
+    api 'com.google.firebase:firebase-auth:15.0.0'
+    api 'com.google.firebase:firebase-storage:15.0.0'
+    api 'com.crashlytics.sdk.android:crashlytics:2.9.1'
+    api 'com.google.firebase:firebase-config:15.0.0'
+    api 'com.google.firebase:firebase-firestore:15.0.0'
 
 
-    compile 'com.github.clans:fab:1.6.4'
+    api 'com.github.clans:fab:1.6.4'
 
 //  chat library
-    compile 'com.github.stfalcon:chatkit:0.2.2'
+    api 'com.github.stfalcon:chatkit:0.2.2'
 
     //Picasso
-    compile "com.squareup.picasso:picasso:$picassoVersion"
+    api "com.squareup.picasso:picasso:$picassoVersion"
 
     //ImageViews
-    compile "de.hdodenhof:circleimageview:$circleImageViewVersion"
-    compile "com.github.siyamed:android-shape-imageview:$shapeImageViewVersion"
+    api "de.hdodenhof:circleimageview:$circleImageViewVersion"
+    api "com.github.siyamed:android-shape-imageview:$shapeImageViewVersion"
 
 //    chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
 
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

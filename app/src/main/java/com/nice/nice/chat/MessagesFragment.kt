@@ -32,6 +32,7 @@ class MessagesFragment : BaseMessagesFragment(){
 
     }
 
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.activity_chat_list, container, false)
